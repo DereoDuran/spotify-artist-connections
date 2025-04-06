@@ -368,21 +368,30 @@ async function makeUserSpotifyApiRequest<T>(
             throw new Error(`Spotify API request failed with status ${response.status}`);
         }
 
-        // Handle responses with no body (e.g., 201 Created, 204 No Content)
-        if (response.status === 201 || response.status === 204) {
-             // For POST/PUT that create/modify, the response might be empty or contain specific info.
-             // If a snapshot_id is expected (like adding tracks), it might be in the body.
-             // Try parsing JSON, but default to an empty object if it fails or is empty.
+        // Handle successful responses based on status code
+        if (response.status === 201) { // Created - Expects the created resource (Playlist)
             try {
                  const jsonResponse = await response.json();
+                 // console.log("(User Auth) Playlist creation successful (201). Response body:", jsonResponse); // Optional: Log successful response
                  return jsonResponse as T;
-             } catch (e) {
-                 return {} as T; // Return empty object for 201/204 if body is empty or not JSON
+             } catch (e: any) {
+                 console.error("(User Auth) Failed to parse JSON response body for 201 status:", e);
+                 // Throw an error because we expected a valid JSON body for 201 Created
+                 throw new Error(`Spotify API returned 201 Created, but failed to parse response body: ${e.message}`);
+             }
+        } else if (response.status === 204) { // No Content
+             // console.log("(User Auth) Request successful (204 No Content)."); // Optional: Log success
+             return {} as T; // Return empty object as there's no content
+        } else { // Handle other success statuses (e.g., 200 OK for GET)
+             try {
+                const jsonResponse = await response.json();
+                // console.log("(User Auth) Request successful (200 OK). Response body:", jsonResponse); // Optional: Log successful response
+                return jsonResponse as T;
+             } catch (e: any) {
+                 console.error("(User Auth) Failed to parse JSON response body for success status:", response.status, e);
+                 throw new Error(`Spotify API request succeeded (${response.status}), but failed to parse response body: ${e.message}`);
              }
         }
-
-        // For GET requests or others expecting a body
-        return (await response.json()) as T;
 
     } catch (error: any) {
         console.error(`(User Auth) Error during Spotify API request: ${method} ${endpoint}:`, error);
