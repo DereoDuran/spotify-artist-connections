@@ -75,7 +75,7 @@ export async function GET(request: NextRequest) {
       }
 
       // Redirect to the search page upon successful authentication
-      return NextResponse.redirect(new URL('/search', request.url));
+      return NextResponse.redirect(new URL('/', request.url));
     } else {
       console.error("Failed to retrieve access token from Spotify:", tokenData);
       return NextResponse.redirect(new URL('/login?error=token_exchange_failed', request.url));
