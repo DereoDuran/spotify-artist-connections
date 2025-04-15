@@ -1,25 +1,4 @@
-# Spotify Artist Connections / Song Finder
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fjosecarlosgt%2Fartist-graph&env=NEXT_PUBLIC_SPOTIFY_CLIENT_ID,SPOTIFY_CLIENT_SECRET&envDescription=Spotify%20API%20Credentials&envLink=https%3A%2F%2Fdeveloper.spotify.com%2Fdashboard%2Fapplications)
-
-This application allows users to log in with their Spotify account and search for an artist. It then fetches and displays a comprehensive list of songs associated with that artist, including their albums, singles, and appearances on other works.
-
-**Live Version:** [https://spotify-artist-connections.vercel.app/](https://spotify-artist-connections.vercel.app/)
-
-## Features
-
-*   Spotify Authentication (OAuth 2.0)
-*   Search for artists using the Spotify API.
-*   Fetches all albums, singles, compilations, and appearances for a given artist.
-*   Displays a deduplicated list of songs.
-*   Handles Spotify API token refresh automatically.
-
-## Tech Stack
-
-*   [Next.js](https://nextjs.org/) (App Router)
-*   [TypeScript](https://www.typescriptlang.org/)
-*   [Tailwind CSS](https://tailwindcss.com/)
-*   Spotify Web API
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
 
